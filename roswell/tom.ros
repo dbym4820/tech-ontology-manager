@@ -14,28 +14,36 @@ exec ros -Q -- $0 "$@"
 (in-package :ros.script.tom)
 
 (defun main (&rest argv)
-  (cond ((string= "init" (first argv))
-	 (tom:tom "init"))
-	((string= "concept-name" (first argv))
-	 (format t "~A"
-		 (if (string= (second argv) "")
-		     "invalid input"
-		     (handler-case
-			 (tom:tom "concept-name"
+  (handler-case
+      (cond ((string= "init" (first argv))
+	     (tom "init"))
+	    ((string= "all-concept" (first argv))
+	     (format t "~A"
+		     (tom "all-concept")))
+	    ((string= "concept-name" (first argv))
+	     (format t "~A"
+		     (if (string= (second argv) "")
+			 "invalid input"
+			 (handler-case
+			     (tom "concept-name"
 				  (second argv))
-		       (sb-pcl::no-applicable-method-error (e)
-			 (declare (ignorable e))
-			 (format nil "{}"))))))
-	((string= "concept-id" (first argv))
-	 (format t "~A"
-		 (if (string= (second argv) "")
-		     "invalid input"
-		     (handler-case
-			 (tom:tom "concept-id"
+			   (sb-pcl::no-applicable-method-error (e)
+			     (declare (ignorable e))
+			     (format nil "{}"))))))
+	    ((string= "concept-id" (first argv))
+	     (format t "~A"
+		     (if (string= (second argv) "")
+			 "invalid input"
+			 (handler-case
+			     (tom "concept-id"
 				  (second argv))
-		       (sb-pcl::no-applicable-method-error (e)
-			 (declare (ignorable e))
-			 (format nil "{}"))))))
-	((string= "start-server" (first argv))
-	 (tom:tom "start-server"))))
-	
+			   (sb-pcl::no-applicable-method-error (e)
+			     (declare (ignorable e))
+			     (format nil "{}"))))))
+	    ((string= "start-server" (first argv))
+	     (tom "start-server")
+	     (loop)))
+    (sb-sys::interactive-interrupt (e)
+      (declare (ignorable e))
+      (format t "Stop tom server"))))
+  

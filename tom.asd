@@ -6,21 +6,10 @@
 (defsystem tom
   :version "0.1.3"
   :author "Tomoki Aburatani"
-  :license :MIT
-  :depends-on (:jonathan
-	       :clack
-	       :split-sequence
-	       :alexandria
-	       :optima
-	       :babel
-	       :photon)
-  :serial t
-  :components ((:static-file "LICENSE")
-	       (:static-file "README.md")
-	       (:module "src"
-                :components
-                ((:file "tom"))))
-  :description "Auto question feedback agent"
+  :depends-on (:photon)
+  :components ((:static-file "README.md")
+	       (:file "tom"))
+  :description "technology-ontology-manager"
   :long-description
   #.(with-open-file (stream (merge-pathnames
                              #p"README.md"
