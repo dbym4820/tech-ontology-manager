@@ -25,27 +25,31 @@ $ /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/
 $ brew install roswell
 ```
 
+
+
 ### roswellによるCommon Lisp処理系の初期化
 
 ```
 $ ros init
 ```
 
+
+
 ### roswellでインストールしたコマンドへのパスを通す
 
 ```
-$ echo "export PATH=$PATH:~/.roswell/bin"
+$ echo "export PATH='$(HOME)/.roswell/bin':$PATH" >> ~/.profile
 ```
+
+
 
 ### 依存するパッケージのインストール
 
 ```
-$ ros install dbym4820/photon
+$ ros install dbym4820/photon dbym4820/tom
 ```
 
-```
-$ ros install dbym4820/tom
-```
+
 
 ### 技術オントロジーマネージャーの初期化
 
