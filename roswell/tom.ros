@@ -1,0 +1,41 @@
+#!/bin/sh
+#|-*- mode:lisp -*-|#
+#|
+exec ros -Q -- $0 "$@"
+|#
+(progn
+  (ros:ensure-asdf)
+  (unless (find-package :tom)
+    (ql:quickload :tom :silent t)))
+
+(defpackage :ros.script.tom
+  (:use :cl)
+  (:import-from :tom :tom))
+(in-package :ros.script.tom)
+
+(defun main (&rest argv)
+  (cond ((string= "init" (first argv))
+	 (tom:tom "init"))
+	((string= "concept-name" (first argv))
+	 (format t "~A"
+		 (if (string= (second argv) "")
+		     "invalid input"
+		     (handler-case
+			 (tom:tom "concept-name"
+				  (second argv))
+		       (sb-pcl::no-applicable-method-error (e)
+			 (declare (ignorable e))
+			 (format nil "{}"))))))
+	((string= "concept-id" (first argv))
+	 (format t "~A"
+		 (if (string= (second argv) "")
+		     "invalid input"
+		     (handler-case
+			 (tom:tom "concept-id"
+				  (second argv))
+		       (sb-pcl::no-applicable-method-error (e)
+			 (declare (ignorable e))
+			 (format nil "{}"))))))
+	((string= "start-server" (first argv))
+	 (tom:tom "start-server"))))
+	
