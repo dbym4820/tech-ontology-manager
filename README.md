@@ -44,7 +44,7 @@ $ ros install dbym4820/photon
 ```
 
 ```
-$ ros install dbym4820/tech-ontology-manager
+$ ros install dbym4820/tom
 ```
 
 ### 技術オントロジーマネージャーの初期化
